@@ -1,3 +1,2 @@
-# php-start
+# basic php information in the form of short notes to myself
 
-basic php information in the form of short notes to myself

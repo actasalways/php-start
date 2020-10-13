@@ -4,11 +4,14 @@ function form_filter($post){
     return is_array($post) ?  array_map('form_filter',$post) : htmlspecialchars(trim($post)) ;
 }
 
+$_POST = array_map('form_filter', $_POST);
+
 function post($name){
     if(isset($_POST[$name])){
         return $_POST[$name];
     }
 };
+
 
 if(post('submit')){
     print_r($_POST);

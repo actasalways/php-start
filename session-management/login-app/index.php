@@ -3,8 +3,13 @@
 session_start();
 ob_start();
 
-
 require 'config.php';
+if(isset($_SESSION['time']) &&  time() > $_SESSION['time']  ){
+session_destroy();
+header('Location: session-closed.php');
+}else{
+    $_SESSION['time'] = time() + 5; 
+}
 
 
 ?>
@@ -20,9 +25,9 @@ require 'config.php';
     
 <?php 
     if (isset($_SESSION['user_name'])) {
-        include 'admin.php';
+        require 'admin.php';
     }else{
-        include 'login.php';
+        require 'login.php';
     }
 ?>
 

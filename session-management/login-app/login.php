@@ -12,9 +12,10 @@ if(isset($_POST['submit'])){
     }elseif ($password != $member['password']) {
         $error = 'password is invalid';
     }else{
+        $_SESSION['time'] = time() + 5;
         $_SESSION['user_name'] = $member['user_name'];
         //header()
-        header('Location: admin.php ');
+        header('Location: index.php ');
 
 
     }

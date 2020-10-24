@@ -4,7 +4,7 @@ function upload($file, $limit_size=1, $file_extensions=null )
 {
     $result =[];
     if ($file['error'] == 4 ) {
-        $result['err'] = 'please select file';
+        $result['err'] = 'Please Select File';
     }else{
         #print_r($_FILES);
         if(is_uploaded_file($file['tmp_name'])){
@@ -29,7 +29,7 @@ function upload($file, $limit_size=1, $file_extensions=null )
                         #echo '<h2>FILE UPLOADED</h2>';
                         $result['file'] = 'upload/'. $unique_id. '.'. $exp;
                     }else{
-                        $result['err'] = 'something went wrong.';
+                        $result['err'] = 'Something went wrong.';
                     }
                 }else{
                     $result['err'] = 'Maximum 3MB file can be uploaded';

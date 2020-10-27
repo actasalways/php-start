@@ -29,6 +29,9 @@ switch ($_GET['page']) {
         require_once 'update.php';
     break;
     
+    case 'delete':
+        require_once 'delete.php';
+    break;
 
 }
 

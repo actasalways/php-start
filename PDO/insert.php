@@ -29,7 +29,7 @@ $add = $query -> execute ([
 if(isset($_POST['submit'])){
     $title = $_POST['title'] ?? null;
     $context = $_POST['context'] ?? null;
-    $confirmation = isset($_POST['confirmation']) ? 1 : 0 ;
+    $confirmation = isset($_POST['confirmation']) ? $_POST['confirmation'] : 0 ;
     if(!$title){
         echo 'add title';
     }elseif (!$context) {

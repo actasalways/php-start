@@ -1,5 +1,8 @@
 <?php
 
+require 'header.php';
+
+
 /*
 $query = $db -> prepare('INSERT INTO lessons SET 
 title = ?,
@@ -43,7 +46,7 @@ if(isset($_POST['submit'])){
         ]);
 
         if($add){
-            header('Location : index.php');
+            header('Location:?page=index');
         }else{
             $err = $query->errorInfo();
             echo 'MySQL Error ' . $err[2]; 

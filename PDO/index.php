@@ -2,11 +2,12 @@
 
 require_once 'connect.php';
 
-if(isset($_GET['page'])){
-    $_GET['page'] = 'insert';
+
+if(!isset($_GET['page'])){
+    $_GET['page'] = 'index';
 }
 
-print_r($_GET);
+#print_r($_GET);
 
 
 switch ($_GET['page']) {
@@ -16,6 +17,10 @@ switch ($_GET['page']) {
 
     case 'insert':
         require_once 'insert.php';
+        break;
+    
+    case 'read':
+        require_once 'read.php';
         break;
     
 

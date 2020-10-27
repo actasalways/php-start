@@ -27,7 +27,7 @@ $query->execute([
             <li>
                 <?=$lesson['title'] ?>
                 <a href="index.php?page=read&id=<?=$lesson['id'] ?>">[READ]</a>
-                <a href="">[EDİT]</a>
+                <a href="index.php?page=update&id=<?=$lesson['id'] ?>">[UPDATE]</a>
                 <a href="">[DELETE]</a>
             </li>
         <?php endif; ?>

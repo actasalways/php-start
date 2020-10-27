@@ -1,5 +1,7 @@
 <?php 
 
+ob_start();
+
 require_once 'connect.php';
 
 
@@ -13,15 +15,19 @@ if(!isset($_GET['page'])){
 switch ($_GET['page']) {
     case 'index':
         require_once 'homepage.php';
-        break;
+    break;
 
     case 'insert':
         require_once 'insert.php';
-        break;
+    break;
     
     case 'read':
         require_once 'read.php';
-        break;
+    break;
+
+    case 'update':
+        require_once 'update.php';
+    break;
     
 
 }

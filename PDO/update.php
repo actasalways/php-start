@@ -12,8 +12,11 @@ $query->execute([
 ]);
 
 $lesson = $query->fetch(PDO::FETCH_ASSOC);
-
 #print_r($lesson);
+
+$categories = $db->query('SELECT * FROM categories ORDER BY namee ASC')->fetchAll(PDO::FETCH_ASSOC);
+#print_r($categories);
+#print_r($_POST);
 
 if(!$lesson){
     header('Location:index.php');
@@ -24,22 +27,29 @@ if(isset($_POST['submit'])){
     $title = $_POST['title'] ?? $lesson['title'];
     $context = $_POST['context'] ?? $lesson['context'];
     $confirmation = isset($_POST['confirmation']) ? $_POST['confirmation'] : $lesson['confirmation'] ;
+    $category_id = isset($_POST['category_id']) ? $_POST['category_id'] : null ;
+
 
     if(!$title){
         echo 'add title';
     }elseif (!$context) {
         echo 'add context';
+    }elseif (!$category_id) {
+        echo 'Select Category';
     }else{
 
         $query = $db->prepare('UPDATE lessons SET
 title = ?,
 context = ?,
+category_id = ?,
 confirmation = ?
 WHERE id = ?');
+
 
 $update = $query->execute([
     $title,
     $context,
+    $category_id,
     $confirmation,
     $lesson['id']
 ]);
@@ -87,15 +97,20 @@ $update = $query->execute([
         <input type="text" value="<?= isset($_POST['title']) ? $_POST['title'] :  $lesson['title'] ?>" name="title">
         <br><br>
     Context : <br>
-        <textarea name="context" 
-        value="<?= isset($_POST['context']) ? $_POST['context'] :  $lesson['context'] ?>"
-        placeholder="<?= isset($_POST['context']) ? $_POST['context'] :  $lesson['context'] ?>"
-        cols="30" rows="10"></textarea>
+        <textarea name="context"  cols="30" rows="10"><?=isset($_POST['context']) ? $_POST['context'] :  $lesson['context'] ?></textarea>
+        <br><br>
+    Categories : <br>
+        <select name="category_id" id="">
+            <option value="">Select Category</option>
+            <?php foreach($categories as $category): ?>
+                <option <?= $category['id'] == $lesson['category_id'] ? 'selected' : ''   ?> value="<?=$category['id'] ?>"> <?= $category['namee'] ?> </option>
+            <?php endforeach; ?>
+        </select>
         <br><br>
     Confirmation : <br>
         <select name="confirmation" id="">
-            <option <?= $lesson['confirmation'] == 0 ? 'selected' : null ?>  value="0">not confirmated</option>
             <option <?= $lesson['confirmation'] == 1 ? 'selected' : null ?> value="1">confirmated</option>
+            <option <?= $lesson['confirmation'] == 0 ? 'selected' : null ?>  value="0">not confirmated</option>
         </select>
         <br><br>
     

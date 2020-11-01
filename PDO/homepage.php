@@ -1,12 +1,24 @@
+<form action="" method="get">
+    <input type="text" value="<?= isset($_GET['search']) ? $_GET['search'] : ''  ?>" name="search" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+
+
 <?php
 
 #fetch() 
 #fetchAll()
 #prepare - execute 
 
-$lessons =  $db-> query('SELECT lessons.id,lessons.title,categories.namee as category_name,lessons.confirmation FROM lessons
-INNER JOIN categories ON categories.id = lessons.category_id
-ORDER BY lessons.id DESC')->fetchAll(PDO::FETCH_ASSOC);
+$sql = 'SELECT lessons.id,lessons.title,categories.namee as category_name,lessons.confirmation FROM lessons
+INNER JOIN categories ON categories.id = lessons.category_id';
+if(isset($_GET['search'])){
+    $sql .= ' WHERE lessons.title LIKE "%'. $_GET['search'].'%" || lessons.context LIKE "%'. $_GET['search'].'%" ';
+}
+$sql .= ' ORDER BY lessons.id DESC';
+
+
+$lessons =  $db-> query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 
 /*
@@ -43,7 +55,11 @@ $query->execute([
 
 <?php else: ?>
     <div>
-        No Courses Yet
+      <?php  if(isset($_GET['search'])): ?>
+            No Courses Avaible to search 
+        <?php else : ?>
+            No Courses Yet
+        <?php endif ; ?> 
     </div>
 
 <?php endif; ?> 

@@ -2,9 +2,13 @@
 
 ob_start();
 
-
 require_once 'header.php';
 require_once 'connect.php';
+
+$_GET = array_map(function($get){
+    return htmlspecialchars(trim($get)); 
+},$_GET);
+
 
 
 if(!isset($_GET['page'])){

@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
     $title = $_POST['title'] ?? null;
     $context = $_POST['context'] ?? null;
     $confirmation = isset($_POST['confirmation']) ? $_POST['confirmation'] : 0 ;
-    $category_id = isset($_POST['category_id']) ? $_POST['category_id'] : null ;
+    $category_id = isset($_POST['category_id']) && is_array($_POST['category_id']) ? implode(',', $_POST['category_id']) : null ;
 
     if(!$title){
         echo 'add title';
@@ -50,8 +50,10 @@ if(isset($_POST['submit'])){
             $title, $context, $confirmation,$category_id
         ]);
 
+        $lastId = $db->lastInsertId();
+
         if($add){
-            header('Location:?page=index');
+            header('Location:?page=read&id='. $lastId);
         }else{
             $err = $query->errorInfo();
             #echo 'MySQL Error ' . $err[2]; 
@@ -72,8 +74,7 @@ if(isset($_POST['submit'])){
         <textarea name="context" value="<?= isset($_POST['context']) ? $_POST['context'] : null ?>" cols="30" rows="10"></textarea>
         <br><br>
     Categories : <br>
-    <select name="category_id" id="">
-        <option value="">Select Category</option>
+    <select name="category_id[]" multiple size="4">
         <?php foreach($categories as $category): ?>
             <option value="<?=$category['id'] ?>"> <?= $category['namee'] ?> </option>
         <?php endforeach; ?>

@@ -4,7 +4,7 @@
 <?php 
 
 $categories = $db->query('SELECT categories.*,COUNT(lessons.id) as total_lesson  FROM categories
-LEFT JOIN lessons ON lessons.category_id = categories.id
+LEFT JOIN lessons ON FIND_IN_SET(categories.id, lessons.category_id)
 GROUP BY categories.id')->fetchAll(PDO::FETCH_ASSOC);
 
 

@@ -13,6 +13,7 @@ $query->execute([
 
 $lesson = $query->fetch(PDO::FETCH_ASSOC);
 #print_r($lesson);
+$lesson_categories = explode(',', $lesson['category_id'] );
 
 $categories = $db->query('SELECT * FROM categories ORDER BY namee ASC')->fetchAll(PDO::FETCH_ASSOC);
 #print_r($categories);
@@ -27,7 +28,7 @@ if(isset($_POST['submit'])){
     $title = $_POST['title'] ?? $lesson['title'];
     $context = $_POST['context'] ?? $lesson['context'];
     $confirmation = isset($_POST['confirmation']) ? $_POST['confirmation'] : $lesson['confirmation'] ;
-    $category_id = isset($_POST['category_id']) ? $_POST['category_id'] : null ;
+    $category_id = isset($_POST['category_id']) && is_array($_POST['category_id']) ? implode(',', $_POST['category_id']) : null ;
 
 
     if(!$title){
@@ -100,10 +101,9 @@ $update = $query->execute([
         <textarea name="context"  cols="30" rows="10"><?=isset($_POST['context']) ? $_POST['context'] :  $lesson['context'] ?></textarea>
         <br><br>
     Categories : <br>
-        <select name="category_id" id="">
-            <option value="">Select Category</option>
+        <select name="category_id[]" multiple size="4">
             <?php foreach($categories as $category): ?>
-                <option <?= $category['id'] == $lesson['category_id'] ? 'selected' : ''   ?> value="<?=$category['id'] ?>"> <?= $category['namee'] ?> </option>
+                <option <?= in_array($category['id'], $lesson_categories) ? 'selected' : ''   ?> value="<?=$category['id'] ?>"> <?= $category['namee'] ?> </option>
             <?php endforeach; ?>
         </select>
         <br><br>

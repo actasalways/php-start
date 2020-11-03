@@ -17,7 +17,7 @@ if(!$category){
     exit;
 }
 $query = $db->prepare('SELECT * FROM lessons
-WHERE category_id = ? 
+WHERE FIND_IN_SET(?, category_id) 
 ORDER BY id DESC');
 $query->execute([
     $category['id']

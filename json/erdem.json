@@ -1,0 +1,15 @@
+{
+    "name" : "erdem",
+    "surname" : "bektas",
+    "jobs" : [
+        {
+            "job" : "back-end developer",
+            "api" : "api con"
+        },
+        {
+            "job" : "front-end developer",
+            "design" : "page design"
+        }
+    ]
+
+}
